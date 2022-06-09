@@ -1,18 +1,17 @@
-<html>
+<html lang="en">
     <head>
         <title>Bitcoin Price Index</title>
-        <script src="script.js" ></script>
         <style>
             td { text-align: center}
         </style>
     </head>
     <body onload="checkBitcoin()">
         <div>
-            <table width="100%" border="0" cellspacing="2" align="center">
+            <table style="width:100%; border:0;">
                 <tr>
-                    <th>BPI in €</th>
-                    <th>BPI in $</th>
-                    <th>BPI in £</th>
+                    <th>BPI in &euro;</th>
+                    <th>BPI in &#36;</th>
+                    <th>BPI in &#163;</th>
                 </tr>
                 <tr>
                     <td id="euroBPI"></td>
@@ -28,17 +27,16 @@
         setInterval(checkBitcoin, 10000);
 
         //function that checks bitcoin price index from api
-        async function checkBitcoin() {
+        function checkBitcoin() {
             fetch(`https://api.coindesk.com/v1/bpi/currentprice.json`)
             .then(response => response.json()).then(result => {
-                    console.log(result);
                     //setting the td to display bpi from result
                     document.getElementById("euroBPI").innerHTML = result.bpi.EUR.rate;
                     document.getElementById("dollarBPI").innerHTML = result.bpi.USD.rate;
                     document.getElementById("poundBPI").innerHTML = result.bpi.GBP.rate;
                     
                     document.getElementById("lastUpdated").innerHTML = result.time.updated;
-                });
+                }).catch(err => console.log(err));
         }
     </script>
 </html>
